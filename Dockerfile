@@ -65,7 +65,12 @@ RUN chmod +x /etc/my_init.d/*.sh
 FROM base AS automatic-ripping-machine
 
 RUN mkdir -m 0777 -p /opt/arm \
- && chown arm:arm /opt/arm
+ && mkdir -m 0777 -p /opt/arm/arm \
+ && mkdir -m 0777 -p /opt/arm/arm-dependencies \
+ && mkdir -m 0777 -p /opt/arm/devtools \
+ && mkdir -m 0777 -p /opt/arm/scripts \
+ && mkdir -m 0777 -p /opt/arm/setup \
+ && chown arm:arm /opt/arm/**
 
 # Allow git to be managed from the /opt/arm folders
 COPY --chown=root:root .gitinfo /root/
@@ -74,7 +79,7 @@ RUN git init && git config --global --add safe.directory /opt/arm
 
 # Install dependencies
 COPY --chown=arm:arm requirements.txt arm-dependencies /opt/arm/
-RUN pip install /opt/arm/requirements.txt
+# RUN pip install /opt/arm/requirements.txt
 
 # Copy over source code
 COPY --chown=arm:arm setup.cfg setup devtools scripts /opt/arm/
