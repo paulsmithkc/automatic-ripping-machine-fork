@@ -837,14 +837,20 @@ def import_movie_add(poster_image, imdb_id, movie_group, my_path):
 
 def get_git_revision_hash() -> str:
     """Get full hash of current git commit"""
-    return subprocess.check_output(['git', 'rev-parse', 'HEAD'],
-                                   cwd=cfg.arm_config['INSTALLPATH']).decode('ascii').strip()
+	try:
+    	return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=cfg.arm_config['INSTALLPATH']).decode('ascii').strip()
+	except:
+		app.logger.error('Failed: git rev-parse HEAD, cwd=' + cfg.arm_config['INSTALLPATH'])
+		return ""
 
 
 def get_git_revision_short_hash() -> str:
     """Get short hash of current git commit"""
-    return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'],
-                                   cwd=cfg.arm_config['INSTALLPATH']).decode('ascii').strip()
+	try:
+    	return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=cfg.arm_config['INSTALLPATH']).decode('ascii').strip()
+	except:
+		app.logger.error('Failed: git rev-parse --short HEAD, cwd=' + cfg.arm_config['INSTALLPATH'])
+		return ""
 
 
 def git_check_updates(current_hash) -> bool:
