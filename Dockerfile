@@ -74,17 +74,17 @@ RUN git init
 RUN git config --global --add safe.directory /opt/arm
 
 # Install dependencies
-COPY ./requirements.txt /opt/arm/
-COPY ./arm-dependencies /opt/arm/
+COPY ./requirements.txt /opt/arm/requirements.txt
+COPY ./arm-dependencies /opt/arm/arm-dependencies
 RUN pip install ./requirements.txt
 
 # Copy over source code
-COPY ./setup.cfg /opt/arm/
-COPY ./setup /opt/arm/
+COPY ./setup.cfg /opt/arm/setup.cfg
+COPY ./setup /opt/arm/setup
 RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
-COPY ./devtools /opt/arm/
-COPY ./scripts /opt/arm/
-COPY ./arm /opt/arm/
+COPY ./devtools /opt/arm/devtools
+COPY ./scripts /opt/arm/scripts
+COPY ./arm /opt/arm/arm
 
 CMD ["/sbin/my_init"]
 WORKDIR /home/arm
