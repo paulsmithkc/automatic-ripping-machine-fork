@@ -148,10 +148,12 @@ def update_drive_job(job):
     """
     Function to take current job task and update the associated drive ID into the database
     """
-    drive = SystemDrives.query.filter_by(mount=job.devpath).first()
-    drive.new_job(job.job_id)
-    logging.debug(f"Updating drive [{job.devpath}] current job, with id [{job.job_id}]")
     try:
+        drive = SystemDrives.query.filter_by(mount=job.devpath).first()
+        if not drive:
+            raise Exception("Drive [{job.devpath}] not found.")
+        drive.new_job(job.job_id)
+        logging.debug(f"Updating drive [{job.devpath}] current job, with id [{job.job_id}]")
         db.session.commit()
         logging.debug("Database update with new Job ID to associated drive")
     except Exception as error:  # noqa: E722
