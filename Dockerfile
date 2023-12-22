@@ -79,7 +79,7 @@ RUN git init && git config --global --add safe.directory /opt/arm/
 
 # Install dependencies
 COPY --chown=arm:arm requirements.txt arm-dependencies /opt/arm/
-RUN pip install /opt/arm/requirements.txt
+#RUN pip install /opt/arm/requirements.txt
 
 # Copy over source code
 COPY --chown=arm:arm VERSION favicon.ico setup.cfg setup devtools scripts /opt/arm/
