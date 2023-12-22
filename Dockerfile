@@ -70,8 +70,7 @@ RUN mkdir -m 0777 -p /opt/arm \
 # Allow git to be managed from the /opt/arm folders
 COPY --chown=root:root .gitinfo /root/
 COPY --chown=arm:arm .gitinfo /home/arm/
-RUN git init
-RUN git config --global --add safe.directory /opt/arm
+RUN git init && git config --global --add safe.directory /opt/arm
 
 # Install dependencies
 COPY --chown=arm:arm requirements.txt arm-dependencies /opt/arm/
