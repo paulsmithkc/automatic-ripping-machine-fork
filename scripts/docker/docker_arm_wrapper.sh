@@ -5,6 +5,8 @@ ARMLOG="/home/arm/logs/arm.log"
 echo "[ARM] Entering docker wrapper" | logger -t ARM -s
 echo "$(date) Entering docker wrapper" >> $ARMLOG
 
+sleep 2
+
 #######################################################################################
 # YAML Parser to read Config
 #

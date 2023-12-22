@@ -6,6 +6,8 @@ DEVNAME=$1
 PROTECTION=""
 USER="arm"
 
+sleep 2
+
 #######################################################################################
 # YAML Parser to read Config
 #
