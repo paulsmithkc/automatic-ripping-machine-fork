@@ -82,7 +82,7 @@ COPY --chown=arm:arm requirements.txt arm-dependencies /opt/arm/
 RUN pip install /opt/arm/requirements.txt
 
 # Copy over source code
-COPY --chown=arm:arm setup.cfg setup devtools scripts /opt/arm/
+COPY --chown=arm:arm VERSION favicon.ico setup.cfg setup devtools scripts /opt/arm/
 RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
 COPY --chown=arm:arm arm /opt/arm/
 

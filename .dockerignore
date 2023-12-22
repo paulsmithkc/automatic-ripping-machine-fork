@@ -212,12 +212,16 @@ dmypy.json
 cython_debug/
 
 # ARM-specific
+.git/
 .github/
-.dockerignore
 .gitignore
 .gitmodules
+docs/
+test/
 
+**/bin
+**/obj
+**/node_modules
 *.yml
 *.md
-!README.md
 Dockerfile
