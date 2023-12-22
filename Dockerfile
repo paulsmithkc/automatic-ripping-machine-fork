@@ -64,14 +64,27 @@ RUN chmod +x /etc/my_init.d/*.sh
 # Final image pushed for use
 FROM base AS automatic-ripping-machine
 
-# Copy over source code
-COPY . /opt/arm/
-
-# Our docker udev rule
-RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
+RUN mkdir -m 0777 -p /opt/arm
+RUN chown arm:arm /opt/arm
 
 # Allow git to be managed from the /opt/arm folders
+COPY ./.gitinfo /root/
+COPY ./.gitinfo /home/arm/
+RUN git init
 RUN git config --global --add safe.directory /opt/arm
+
+# Install dependencies
+COPY ./requirements.txt /opt/arm/
+COPY ./arm-dependencies /opt/arm/
+RUN pip install ./requirements.txt
+
+# Copy over source code
+COPY ./setup.cfg /opt/arm/
+COPY ./setup /opt/arm/
+RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
+COPY ./devtools /opt/arm/
+COPY ./scripts /opt/arm/
+COPY ./arm /opt/arm/
 
 CMD ["/sbin/my_init"]
 WORKDIR /home/arm
