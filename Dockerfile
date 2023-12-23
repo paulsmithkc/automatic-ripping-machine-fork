@@ -66,14 +66,17 @@ FROM base AS automatic-ripping-machine
 
 # Add .gitinfo
 WORKDIR /
-COPY --chown=root:root .gitinfo /root/
-COPY --chown=arm:arm .gitinfo /home/arm/
+COPY .gitinfo /root/
+COPY .gitinfo /home/arm/
 
-# Allow git to be managed from the /opt/arm folders
+# Prepare git repo
 WORKDIR /opt/arm
-RUN chown arm:arm .  \
- && git init . \
- && git config --global --add safe.directory /opt/arm/
+RUN git init . \
+ && git config --global user.name "arm" \
+ && git config --global user.email "" \
+ && git config --global --add safe.directory /opt/arm/ \
+ && git add . \
+ && git commit -m "initial commit"
 
 # Copy over source code
 COPY VERSION requirements.txt favicon.ico setup.cfg ./
