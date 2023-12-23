@@ -64,27 +64,25 @@ RUN chmod +x /etc/my_init.d/*.sh
 # Final image pushed for use
 FROM base AS automatic-ripping-machine
 
-RUN mkdir -m 0777 -p /opt/arm \
- && mkdir -m 0777 -p /opt/arm/arm \
- && mkdir -m 0777 -p /opt/arm/arm-dependencies \
- && mkdir -m 0777 -p /opt/arm/devtools \
- && mkdir -m 0777 -p /opt/arm/scripts \
- && mkdir -m 0777 -p /opt/arm/setup \
- && chown arm:arm /opt/arm/**
-
-# Allow git to be managed from the /opt/arm folders
+# Add .gitinfo
+WORKDIR /
 COPY --chown=root:root .gitinfo /root/
 COPY --chown=arm:arm .gitinfo /home/arm/
-RUN git init && git config --global --add safe.directory /opt/arm/
 
-# Install dependencies
-COPY --chown=arm:arm requirements.txt arm-dependencies /opt/arm/
-#RUN pip install /opt/arm/requirements.txt
+# Allow git to be managed from the /opt/arm folders
+WORKDIR /opt/arm
+RUN chown arm:arm .  \
+ && git init . \
+ && git config --global --add safe.directory /opt/arm/
 
 # Copy over source code
-COPY --chown=arm:arm VERSION favicon.ico setup.cfg setup devtools scripts /opt/arm/
+COPY VERSION requirements.txt favicon.ico setup.cfg ./
+COPY ./arm-dependencies ./arm-dependencies
+COPY ./devtools ./devtools
+COPY ./scripts ./scripts
+COPY ./setup ./setup
 RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
-COPY --chown=arm:arm arm /opt/arm/
+COPY ./arm ./arm
 
-CMD ["/sbin/my_init"]
 WORKDIR /home/arm
+CMD ["/sbin/my_init"]
