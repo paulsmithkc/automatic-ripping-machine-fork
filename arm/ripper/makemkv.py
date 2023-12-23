@@ -40,7 +40,7 @@ def makemkv(logfile, job):
     logging.info(f"Starting MakeMKV rip. Method is {job.config.RIPMETHOD}")
     # get MakeMKV disc number
     logging.debug("Getting MakeMKV disc number")
-    cmd = f"makemkvcon -r info disc:9999 | grep {job.devpath} | grep -oP '(?<=:).*?(?=,)'"
+    cmd = f"makemkvcon -r info dev:{job.devpath} | grep {job.devpath} | grep -oP '(?<=:).*?(?=,)'"
     logging.debug(f"Using command: {cmd}")
     try:
         mdisc = subprocess.check_output(
@@ -61,7 +61,7 @@ def makemkv(logfile, job):
         cmd = f'makemkvcon backup --decrypt {job.config.MKV_ARGS} --minlength={job.config.MINLENGTH}' \
               f'--progress={os.path.join(job.config.LOGPATH, "progress", str(job.job_id))}.log ' \
               f'--messages=-stdout ' \
-              f'-r disc:{mdisc.strip()} {shlex.quote(rawpath)}'
+              f'-r dev:{job.devpath} {shlex.quote(rawpath)}'
         logging.info("Backing up disc")
         run_makemkv(cmd, logfile)
     # Rip Blu-ray without enhanced protection or dvd disc
@@ -208,7 +208,7 @@ def get_track_info(mdisc, job):
 
     cmd = f'makemkvcon -r --progress={os.path.join(job.config.LOGPATH, "progress", str(job.job_id))}.log ' \
           f'--messages=-stdout --minlength={job.config.MINLENGTH} ' \
-          f'--cache=1 info disc:{mdisc}'
+          f'--cache=1 info dev:{job.devpath}'
     logging.debug(f"Sending command: {cmd}")
     try:
         mkv = subprocess.check_output(
