@@ -65,6 +65,7 @@ RUN chmod +x /etc/my_init.d/*.sh
 FROM base AS automatic-ripping-machine
 
 # Install sg3-utils
+WORKDIR /
 RUN apt-get update -y
 RUN apt-get install sg3-utils -y 
 
@@ -72,6 +73,17 @@ RUN apt-get install sg3-utils -y
 WORKDIR /
 COPY .gitinfo /root/
 COPY .gitinfo /home/arm/
+
+# Copy over source code
+WORKDIR /opt/arm
+COPY VERSION requirements.txt favicon.ico setup.cfg ./
+COPY ./arm-dependencies ./arm-dependencies
+COPY ./devtools ./devtools
+COPY ./scripts ./scripts
+COPY ./setup ./setup
+RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
+RUN echo sg > /etc/modules-load.d/sg.conf
+COPY ./arm ./arm
 
 # Prepare git repo
 WORKDIR /opt/arm
@@ -81,16 +93,6 @@ RUN git init . \
  && git config --global --add safe.directory /opt/arm/ \
  && git add . \
  && git commit -m "initial commit"
-
-# Copy over source code
-COPY VERSION requirements.txt favicon.ico setup.cfg ./
-COPY ./arm-dependencies ./arm-dependencies
-COPY ./devtools ./devtools
-COPY ./scripts ./scripts
-COPY ./setup ./setup
-RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
-RUN echo sg > /etc/modules-load.d/sg.conf
-COPY ./arm ./arm
 
 WORKDIR /home/arm
 CMD ["/sbin/my_init"]
