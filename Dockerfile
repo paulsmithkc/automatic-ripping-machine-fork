@@ -88,9 +88,9 @@ COPY ./arm ./arm
 # Prepare git repo
 WORKDIR /opt/arm
 RUN git init . \
- && git config --global user.name "arm" \
- && git config --global user.email "" \
- && git config --global --add safe.directory /opt/arm/ \
+ && git config --system user.name "arm" \
+ && git config --system user.email "" \
+ && git config --system --add safe.directory /opt/arm/ \
  && git add . \
  && git commit -m "initial commit"
 
