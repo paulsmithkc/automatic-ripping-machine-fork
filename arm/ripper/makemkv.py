@@ -35,9 +35,12 @@ def makemkv(logfile, job):
     :return: path to ripped files.
     """
 
+    if not job.devpath.startswith('/dev'):
+        job.devpath = '/dev/' + job.devpath
+
     # confirm MKV is working, beta key hasn't expired
     prep_mkv(logfile)
-    logging.info(f"Starting MakeMKV rip. Method is {job.config.RIPMETHOD}")
+    logging.info(f"Starting MakeMKV rip. Method is {job.config.RIPMETHOD}, devpath={job.devpath}")
     # get MakeMKV disc number
     logging.debug("Getting MakeMKV disc number")
     cmd = f"makemkvcon -r info dev:{job.devpath} | grep {job.devpath} | grep -oP '(?<=:).*?(?=,)'"
