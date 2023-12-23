@@ -85,6 +85,7 @@ COPY ./devtools ./devtools
 COPY ./scripts ./scripts
 COPY ./setup ./setup
 RUN ln -sv /opt/arm/setup/51-docker-arm.rules /lib/udev/rules.d/
+RUN echo sg > /etc/modules-load.d/sg.conf
 COPY ./arm ./arm
 
 WORKDIR /home/arm
