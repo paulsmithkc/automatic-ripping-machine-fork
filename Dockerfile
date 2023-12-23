@@ -64,6 +64,10 @@ RUN chmod +x /etc/my_init.d/*.sh
 # Final image pushed for use
 FROM base AS automatic-ripping-machine
 
+# Install sg3-utils
+RUN apt-get update -y
+RUN apt-get install sg3-utils -y 
+
 # Add .gitinfo
 WORKDIR /
 COPY .gitinfo /root/
