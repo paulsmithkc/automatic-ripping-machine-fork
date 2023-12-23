@@ -33,7 +33,9 @@ echo "Adding arm user to 'render' group"
 usermod -a -G render arm
 
 ### Setup Files
+mkdir -p /opt/arm/
 chown -R arm:arm /opt/arm
+git config --global --add safe.directory /opt/arm/
 
 # setup needed/expected dirs if not found
 chown arm:arm $ARM_HOME
