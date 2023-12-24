@@ -1,0 +1,9 @@
+[user]
+  name = arm
+  email =
+[safe]
+  directory = /opt/arm
+[push]
+  autoSetupRemote = true
+[pull]
+  autoSetupRemote = true

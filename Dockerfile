@@ -69,9 +69,9 @@ WORKDIR /
 RUN apt-get update -y
 RUN apt-get install sg3-utils -y 
 
-# Add .gitinfo
-COPY .gitinfo /root/
-COPY .gitinfo /home/arm/
+# Add .gitconfig
+COPY --chown=root:root .gitconfig-arm /root/.gitconfig
+COPY --chown=arm:arm .gitconfig-arm /home/arm/.gitconfig
 
 # Copy over source code
 WORKDIR /opt/arm
