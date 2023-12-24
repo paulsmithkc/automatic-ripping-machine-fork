@@ -63,14 +63,13 @@ RUN chmod +x /etc/my_init.d/*.sh
 ###########################################################
 # Final image pushed for use
 FROM base AS automatic-ripping-machine
+WORKDIR /
 
 # Install sg3-utils
-WORKDIR /
 RUN apt-get update -y
 RUN apt-get install sg3-utils -y 
 
 # Add .gitinfo
-WORKDIR /
 COPY .gitinfo /root/
 COPY .gitinfo /home/arm/
 
@@ -86,7 +85,6 @@ RUN echo sg > /etc/modules-load.d/sg.conf
 COPY ./arm ./arm
 
 # Prepare git repo
-WORKDIR /opt/arm
 RUN git init . \
  && git config --system user.name "arm" \
  && git config --system user.email "" \
