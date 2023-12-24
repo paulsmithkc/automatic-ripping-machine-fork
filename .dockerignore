@@ -214,14 +214,14 @@ cython_debug/
 # ARM-specific
 .git/
 .github/
-.gitignore
 .gitmodules
 docs/
 test/
 
-**/bin
-**/obj
-**/node_modules
 *.yml
 *.md
 Dockerfile
+
+**/bin
+**/obj
+**/node_modules

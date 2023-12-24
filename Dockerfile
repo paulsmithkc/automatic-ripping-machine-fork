@@ -75,7 +75,7 @@ COPY --chown=arm:arm .gitconfig-arm /home/arm/.gitconfig
 
 # Copy over source code
 WORKDIR /opt/arm
-COPY VERSION requirements.txt favicon.ico setup.cfg ./
+COPY VERSION requirements.txt favicon.ico setup.cfg .gitignore ./
 COPY ./arm-dependencies ./arm-dependencies
 COPY ./devtools ./devtools
 COPY ./scripts ./scripts
