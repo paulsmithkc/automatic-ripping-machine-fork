@@ -29,8 +29,16 @@ elif [[ $ARM_UID -eq $DEFAULT_GID ]]; then
     echo -e "Updating arm group id $ARM_GID to default (1000)..."
     groupmod -og $DEFAULT_GID arm
 fi
+
 echo "Adding arm user to 'render' group"
 usermod -a -G render arm
+
+echo "Adding arm user to 'optical' group"
+groupadd optical
+usermod -a -G optical arm
+for dev in /dev/s[rg]*; do
+    chown root:optical $dev
+done
 
 ### Setup Files
 mkdir -p /opt/arm/
