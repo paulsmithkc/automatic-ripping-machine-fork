@@ -68,8 +68,8 @@ WORKDIR /
 # Install apt packages
 RUN apt-get update -y
 RUN apt-get install flatpak sg3-utils -y
-RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo \
- && flatpak install flathub fr.handbrake.ghb -y
+RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak"
+RUN flatpak install -y --bundle "HandBrakeCLI-1.7.2-x86_64.flatpak"
 
 # Install nvidia drivers
 RUN apt-get install nvidia-settings nvidia-headless-470-server nvidia-utils-470-server libnvidia-decode-470-server libnvidia-encode-470-server -y
