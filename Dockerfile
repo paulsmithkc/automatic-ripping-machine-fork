@@ -63,7 +63,7 @@ RUN chmod +x /etc/my_init.d/*.sh
 ###########################################################
 # Final image pushed for use
 FROM base AS automatic-ripping-machine
-WORKDIR /
+WORKDIR /opt/arm
 
 # Install apt packages
 RUN apt-get update -y
