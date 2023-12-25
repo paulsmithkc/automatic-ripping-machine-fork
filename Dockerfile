@@ -71,6 +71,9 @@ RUN apt-get install flatpak sg3-utils -y
 RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo \
  && flatpak install fr.handbrake.ghb
 
+# Install nvidia drivers
+RUN apt-get install nvidia-settings nvidia-headless-470-server nvidia-utils-470-server libnvidia-decode-470-server libnvidia-encode-470-server -y
+
 # Add .gitconfig
 COPY --chown=root:root .gitconfig-arm /root/.gitconfig
 COPY --chown=arm:arm .gitconfig-arm /home/arm/.gitconfig
