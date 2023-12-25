@@ -67,9 +67,10 @@ WORKDIR /
 
 # Install apt and flatpack packages
 RUN apt update -y
-RUN apt install flatpak sg3-utils -y
-RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak" -P "/home/arm/"
-RUN flatpak install -y --bundle "/home/arm/HandBrakeCLI.flatpak"
+RUN apt install sg3-utils -y
+#RUN apt install flatpak -y
+#RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak" -P "/home/arm/"
+#RUN flatpak install -y --bundle "/home/arm/HandBrakeCLI.flatpak"
 
 # Install nvidia drivers
 RUN apt install nvidia-settings nvidia-headless-470-server nvidia-utils-470-server libnvidia-decode-470-server libnvidia-encode-470-server -y
