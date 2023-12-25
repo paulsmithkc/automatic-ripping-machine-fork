@@ -68,8 +68,9 @@ WORKDIR /
 # Install apt packages
 RUN apt-get update -y
 RUN apt-get install flatpak sg3-utils -y
-RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo \
- && flatpak install fr.handbrake.ghb
+ENV FLATHUB_URL="https://flathub.org/repo/flathub.flatpakrepo"
+RUN flatpak remote-add --if-not-exists flathub $FLATHUB_URL \
+ && flatpak install $FLATHUB_URL fr.handbrake.ghb
 
 # Install nvidia drivers
 RUN apt-get install nvidia-settings nvidia-headless-470-server nvidia-utils-470-server libnvidia-decode-470-server libnvidia-encode-470-server -y
