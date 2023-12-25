@@ -63,16 +63,16 @@ RUN chmod +x /etc/my_init.d/*.sh
 ###########################################################
 # Final image pushed for use
 FROM base AS automatic-ripping-machine
-WORKDIR /opt/arm
+WORKDIR /
 
-# Install apt packages
-RUN apt-get update -y
-RUN apt-get install flatpak sg3-utils -y
-RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak"
-RUN flatpak install -y --bundle "HandBrakeCLI-1.7.2-x86_64.flatpak"
+# Install apt and flatpack packages
+RUN apt update -y
+RUN apt install flatpak sg3-utils -y
+RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak" -O "/home/arm/HandBrakeCLI.flatpak"
+RUN flatpak install -y --bundle "/home/arm/HandBrakeCLI.flatpak"
 
 # Install nvidia drivers
-RUN apt-get install nvidia-settings nvidia-headless-470-server nvidia-utils-470-server libnvidia-decode-470-server libnvidia-encode-470-server -y
+RUN apt install nvidia-settings nvidia-headless-470-server nvidia-utils-470-server libnvidia-decode-470-server libnvidia-encode-470-server -y
 
 # Add .gitconfig
 COPY --chown=root:root .gitconfig-arm /root/.gitconfig
