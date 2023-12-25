@@ -65,9 +65,11 @@ RUN chmod +x /etc/my_init.d/*.sh
 FROM base AS automatic-ripping-machine
 WORKDIR /
 
-# Install sg3-utils
+# Install apt packages
 RUN apt-get update -y
-RUN apt-get install sg3-utils -y 
+RUN apt-get install flatpak sg3-utils -y
+RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo \
+ && flatpak install fr.handbrake.ghb
 
 # Add .gitconfig
 COPY --chown=root:root .gitconfig-arm /root/.gitconfig
