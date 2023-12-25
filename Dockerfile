@@ -68,7 +68,7 @@ WORKDIR /
 # Install apt and flatpack packages
 RUN apt update -y
 RUN apt install flatpak sg3-utils -y
-RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak" -O "/home/arm/HandBrakeCLI.flatpak"
+RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak" -P "/home/arm/"
 RUN flatpak install -y --bundle "/home/arm/HandBrakeCLI.flatpak"
 
 # Install nvidia drivers
