@@ -63,19 +63,22 @@ RUN chmod +x /etc/my_init.d/*.sh
 ###########################################################
 # Final image pushed for use
 FROM base AS automatic-ripping-machine
-WORKDIR /
+WORKDIR /home/arm
 
 # Install apt and flatpack packages
 RUN apt update -y
 RUN apt install sg3-utils -y
-RUN apt install flatpak -y \
- && flatpak remote-add flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
- && flatpak install -y flathub fr.handbrake.ghb
-#RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak" -P "/home/arm" \
-# && flatpak install -y "/home/arm/HandBrakeCLI.flatpak"
+# RUN apt install flatpak -y \
+#  && flatpak remote-add flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
+#  && flatpak install -y flathub fr.handbrake.ghb
+# RUN wget "https://handbrake.fr/rotation.php?file=HandBrakeCLI-1.7.2-x86_64.flatpak" -O "/home/arm/HandBrakeCLI-1.7.2-x86_64.flatpak" \
+#  && flatpak install -y "/home/arm/HandBrakeCLI-1.7.2-x86_64.flatpak"
 
 # Install nvidia drivers
 RUN apt install nvidia-settings nvidia-headless-470-server nvidia-utils-470-server libnvidia-decode-470-server libnvidia-encode-470-server -y
+# RUN wget https://us.download.nvidia.com/XFree86/Linux-x86_64/470.223.02/NVIDIA-Linux-x86_64-470.223.02.run \
+#  && chmod +x /home/arm/NVIDIA-Linux-x86_64-470.223.02.run \
+#  && /home/arm/NVIDIA-Linux-x86_64-470.223.02.run
 
 # Add .gitconfig
 COPY --chown=root:root .gitconfig-arm /root/.gitconfig
