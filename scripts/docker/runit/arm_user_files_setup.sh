@@ -30,8 +30,9 @@ elif [[ $ARM_UID -eq $DEFAULT_GID ]]; then
     groupmod -og $DEFAULT_GID arm
 fi
 
-echo "Adding arm user to 'render' group"
+echo "Adding arm user to 'render' and 'video' groups"
 usermod -a -G render arm
+usermod -a -G video arm
 
 echo "Adding arm user to 'optical' group"
 groupadd optical
